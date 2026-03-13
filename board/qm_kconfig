@@ -1,0 +1,15 @@
+menu "board"
+
+    choice
+        prompt "select board platform"
+        default BOARD_PLATFORM_ESP32X
+
+        config BOARD_PLATFORM_ESP32X
+            bool "esp32x"
+
+        config BOARD_PLATFORM_LIERDA_EC71X
+            bool "lierda_ec71x"
+
+    endchoice
+    
+endmenu

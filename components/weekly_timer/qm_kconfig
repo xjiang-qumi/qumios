@@ -1,0 +1,8 @@
+menu "weekly timer"
+
+    config QM_WEEKLY_TIMER_SUPPORT
+        bool "weekly timer support"
+        select QM_TIME_SUPPORT
+        default n
+        
+endmenu

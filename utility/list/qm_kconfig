@@ -1,0 +1,7 @@
+menu "list"
+
+    config QM_CLI
+        bool "qm list support"
+        default "n"
+        
+endmenu

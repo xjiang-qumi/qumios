@@ -1,0 +1,22 @@
+menu "memory"
+
+    config QM_MEMORY_SUPPORT
+        bool "qm memory"
+        default "n"
+
+        if QM_MEMORY_SUPPORT
+            config QM_MEM_HEAP_SIZE
+            int "memory size (unit : k)"
+            default 4096
+            range 2048 10240
+
+            config QM_MEM_BYTE_ALIGNMENT
+            int "memory byte alignment(Power of 2)"
+            default 4
+            range 1 8
+            help 
+                must Power of 2
+
+        endif
+
+endmenu

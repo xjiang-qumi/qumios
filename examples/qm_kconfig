@@ -1,0 +1,4 @@
+menu "examples"
+source "${QDF_PATH}/examples/qm_at/qm_at_server/qm_kconfig" 
+source "${QDF_PATH}/examples/soc/qm_kconfig" 
+endmenu

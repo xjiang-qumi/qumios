@@ -1,0 +1,141 @@
+menu "qm cloud"
+
+    config QM_CLOUD_SUPPORT
+        bool "qm cloud"
+        default n
+
+    if QM_CLOUD_SUPPORT
+
+        config QM_IOT_MQTT_SUPPORT
+            bool "mqtt support"
+            default y
+
+        config QM_IOT_SPEC_SUPPORT
+            bool "qm spec support"
+            default n
+
+        config QM_IOT_PUB_SUPPORT
+            bool "pub support"
+            default y
+
+        config QM_IOT_PROV_SUPPORT
+            bool "iot dev prov support"
+            default y
+        if QM_IOT_OTA_SUPPORT
+            config QM_IOT_PROV_BLE_ADV_CID
+                string "prov ble company adv"
+                default "xj"
+        endif
+
+        choice 
+            prompt "select network type"
+            default QM_IOT_NETWORK_TYPE_WIFI
+
+            config  QM_IOT_NETWORK_TYPE_WIFI
+                bool "wifi"
+
+            config  QM_IOT_NETWORK_TYPE_4G
+                bool "4G"
+        endchoice
+
+
+        config QM_IOT_AUTHCODE_SUPPORT
+            bool "authcode support"
+            default n
+        if QM_IOT_AUTHCODE_SUPPORT
+            config QM_IOT_AUTHCODE_MAX_LEN
+                int "authcode max len"
+                default 32
+                range 16 64
+        endif
+
+        config QM_IOT_DYNREG_SUPPORT
+            bool "dynreg support"
+            default y
+
+        config QM_IOT_DEVMNT_SUPPORT
+            bool "iot dev manger support"
+            default y
+
+        config QM_IOT_OTA_SUPPORT
+            bool "ota support"
+            default n
+        if QM_IOT_OTA_SUPPORT
+            config QM_IOT_SLIENT_OTA_SUPPORT
+                bool "silent ota support"
+                default y
+        endif
+        
+        config QM_IOT_NTP_SUPPORT
+            bool "iot ntp support"
+            default y
+        
+        if QM_IOT_NTP_SUPPORT
+
+            config QM_IOT_NTP_TIMEZONE
+                int "iot ntp timezone"
+                default 8
+
+            config QM_IOT_NTP_DEINIT_TIMEOUT
+                int "iot ntp deinit timout (unit:ms)"
+                default 200
+                range 100 1000
+
+        endif
+
+    config QM_IOT_SN_KV_SUPPORT
+        bool "sn kv support"
+        default n
+
+    config QM_IOT_BLE_CANCEL_DEINIT
+        bool "cancel ble deinit"
+        default n
+
+    config QM_IOT_CORE_PROV_TIMEOUT_S
+        int "prov timeout (unit:ms, -1: not timout) "
+        default 1800
+
+    config QM_IOT_SN_MAX_LEN
+        int "iot did max len (unit:byte)"
+        default 32
+        range 16 64
+
+    config QM_IOT_DID_MAX_LEN
+        int "iot did max len (unit:byte)"
+        default 16
+        range 16 64
+
+    config QM_IOT_MQTT_HOST_MAX_LEN
+        int "iot mqtt host max len (unit:byte)"
+        default 64
+        range 32 128
+
+    config QM_IOT_SSID_MAX_LEN
+        int "wifi ssid max len (unit:byte)"
+        default 64
+        range 32 128
+
+    config QM_IOT_PWD_MAX_LEN
+        int "wifi password max len (unit:byte)"
+        default 64
+        range 32 128
+
+    config QM_IOT_CRT_MAX_LEN
+        int "iot Certificate chain max len (unit:byte)"
+        default 2048
+        range 1024 4096
+
+    config QM_IOT_OTA_CRT_MAX_LEN
+        int "iot ota Certificate chain max len (unit:byte)"
+        default 384
+        range 256 4096
+        
+
+    config QM_IOT_STREAMS_BLOCK_SIZE
+        int "iot ota stream block size (unit:byte)"
+        default 2048
+        range 256 4096
+
+    endif
+    
+endmenu

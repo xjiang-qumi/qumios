@@ -1,0 +1,72 @@
+menu "qm database"
+
+    config QM_KV_SUPPORT
+        bool "qm kv"
+        default y
+
+    if QM_KV_SUPPORT
+        choice
+            prompt "select kv based platform type"
+            default QM_KV_SYSTEM_SUPPORT
+
+            config QM_KV_SYSTEM_SUPPORT
+                bool "qm kv system"
+
+            config QM_KV_DB_SUPPORT
+                bool "qm kv db"
+
+            if QM_KV_DB_SUPPORT
+
+                config QM_KV_DB_FLASH_PARTITION_INFO
+                    string "kv database partition information"
+                    comment "The config format is as follows <name>,<offset>,<size>, the size must more than twice flash sector size"
+
+            endif
+
+        endchoice
+    endif
+
+
+    config QM_TS_SUPPORT
+        bool "qm ts"
+        default n
+        
+    if QM_TS_SUPPORT
+
+        config QM_TS_DB_FLASH_PARTITION_INFO
+            string "time serial database partition information"
+            comment "The config format is as follows <name>,<offset>,<size>,<name>,<offset>,<size>...."
+    endif
+    
+    if QM_KV_DB_SUPPORT || QM_TS_SUPPORT
+        choice
+            prompt "select internal or external flash"
+            default QM_FLASHDB_INTERNAL_FLASH
+
+            config QM_FLASHDB_INTERNAL_FLASH
+                bool "internal flash"
+                select QM_FLASH_SUPPORT
+
+            config QM_FLASHDB_EXTERNAL_FLASH
+                bool "external flash"
+
+            if QM_FLASHDB_EXTERNAL_FLASH
+
+                choice
+                    prompt "select external flash interface"
+                    default QM_FLASHDB_EXTERNAL_FLASH_SPI
+
+                    config QM_FLASHDB_EXTERNAL_FLASH_SPI
+                    bool "spi flash"
+                    select SFUD_SUPPORT
+
+                endchoice
+
+            endif
+
+        endchoice
+
+
+    endif
+
+endmenu

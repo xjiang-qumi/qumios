@@ -1,0 +1,9 @@
+
+menu "hal"
+  source "${QDF_PATH}/include/hal/soc/qm_kconfig"  
+
+  source "${QDF_PATH}/include/hal/wifi/qm_kconfig"
+
+  source "${QDF_PATH}/include/hal/modem/qm_kconfig"  
+   
+endmenu

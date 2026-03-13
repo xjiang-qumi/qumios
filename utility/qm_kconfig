@@ -1,0 +1,10 @@
+menu "utility"
+    source "${QDF_PATH}/utility/kv/qm_kconfig"
+    source "${QDF_PATH}/utility/tlv/qm_kconfig"
+    source "${QDF_PATH}/utility/mtrace/qm_kconfig"  
+    source "${QDF_PATH}/utility/totp/qm_kconfig" 
+    source "${QDF_PATH}/utility/memory/qm_kconfig"
+    source "${QDF_PATH}/utility/barcode/qm_kconfig"
+    source "${QDF_PATH}/utility/sscanf/qm_kconfig"
+    source "${QDF_PATH}/utility/sprintf/qm_kconfig"
+endmenu
