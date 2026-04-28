@@ -1,6 +1,6 @@
 #include "qm.h"
 #include "qm_gpio.h"
-
+#include "qm_platform.h"
 #include "yopen_gpio.h"
 
 
@@ -18,15 +18,45 @@ typedef struct{
 
 static gpio_list_info_t g_gpio_info[200] = 
 {
-    [16] = {GPIO_27, 0, NULL},
-    [19] = {GPIO_22, 0, NULL},
-    [20] = {GPIO_24, 0, NULL},
-    [84] = {GPIO_10, 0, NULL},
-    [97] = {GPIO_16, 4, NULL},
-    [99] = {GPIO_23, 0, NULL},
-    [100] = {GPIO_17, 4, NULL},
-    [102] = {GPIO_20, 0, NULL},
-    [106] = {GPIO_25, 0, NULL},
+    [QM_GPIO_PIN_82] = {GPIO_0, 0, NULL},   
+    [QM_GPIO_PIN_22] = {GPIO_1, 0, NULL},   
+    [QM_GPIO_PIN_23] = {GPIO_2, 0, NULL},   
+    [QM_GPIO_PIN_54] = {GPIO_3, 0, NULL},   
+    [QM_GPIO_PIN_80] = {GPIO_4, 0, NULL},   
+    [QM_GPIO_PIN_81] = {GPIO_5, 0, NULL},   
+    [QM_GPIO_PIN_55] = {GPIO_6, 0, NULL},   
+    [QM_GPIO_PIN_56] = {GPIO_7, 0, NULL},   
+    [QM_GPIO_PIN_66] = {GPIO_8, 0, NULL},   
+    [QM_GPIO_PIN_67] = {GPIO_9, 0, NULL},   
+    [QM_GPIO_PIN_28] = {GPIO_10, 0, NULL},  
+    [QM_GPIO_PIN_29] = {GPIO_11, 0, NULL},  
+    [QM_GPIO_PIN_64] = {GPIO_12, 0, NULL},  
+    [QM_GPIO_PIN_63] = {GPIO_13, 0, NULL},  
+    [QM_GPIO_PIN_62] = {GPIO_14, 0, NULL},  
+    [QM_GPIO_PIN_49] = {GPIO_15, 0, NULL},  
+    [QM_GPIO_PIN_38] = {GPIO_16, 0, NULL},  
+    [QM_GPIO_PIN_39] = {GPIO_17, 0, NULL},  
+    [QM_GPIO_PIN_17] = {GPIO_18, 0, NULL},  
+    [QM_GPIO_PIN_18] = {GPIO_19, 0, NULL},  
+    [QM_GPIO_PIN_5] = {GPIO_20, 0, NULL},   
+    [QM_GPIO_PIN_6] = {GPIO_21, 0, NULL},   
+    [QM_GPIO_PIN_19] = {GPIO_22, 0, NULL},  
+    [QM_GPIO_PIN_100] = {GPIO_23, 0, NULL}, 
+    [QM_GPIO_PIN_101] = {GPIO_24, 0, NULL}, 
+    [QM_GPIO_PIN_16] = {GPIO_25, 0, NULL},  
+    [QM_GPIO_PIN_25] = {GPIO_26, 0, NULL},  
+    [QM_GPIO_PIN_20] = {GPIO_27, 0, NULL},  
+    // GPIO28 内部占用
+    [QM_GPIO_PIN_30] = {GPIO_29, 0, NULL},  
+    [QM_GPIO_PIN_31] = {GPIO_30, 0, NULL},  
+    [QM_GPIO_PIN_32] = {GPIO_31, 0, NULL},  
+    [QM_GPIO_PIN_33] = {GPIO_32, 0, NULL},  
+    [QM_GPIO_PIN_26] = {GPIO_33, 0, NULL},  
+    [QM_GPIO_PIN_53] = {GPIO_34, 0, NULL},  
+    [QM_GPIO_PIN_52] = {GPIO_35, 0, NULL},  
+    [QM_GPIO_PIN_78] = {GPIO_36, 0, NULL},  
+    [QM_GPIO_PIN_50] = {GPIO_37, 0, NULL},  
+    [QM_GPIO_PIN_51] = {GPIO_38, 0, NULL},  
 };
 
 
@@ -53,6 +83,10 @@ int32_t qm_gpio_init(qm_gpio_dev_t *gpio)
         return -QM_ENOMEM;
     }
     memset(gpio_config, 0, sizeof(gpio_config_t));
+
+    yopen_gpio_set_voltage(Vol_1_80V);
+
+    yopen_gpio_deinit(gpio_info->pin_id);
 	
     if(init){
         init = 0;
