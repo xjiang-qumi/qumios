@@ -18,15 +18,44 @@ typedef struct{
 
 static gpio_list_info_t g_gpio_info[200] = 
 {
-    [16] = {GPIO_27, 0, NULL},
-    [19] = {GPIO_22, 0, NULL},
-    [20] = {GPIO_24, 0, NULL},
-    [84] = {GPIO_10, 0, NULL},
-    [97] = {GPIO_16, 4, NULL},
-    [99] = {GPIO_23, 0, NULL},
-    [100] = {GPIO_17, 4, NULL},
-    [102] = {GPIO_20, 0, NULL},
-    [106] = {GPIO_25, 0, NULL},
+    [YOPEN_PIN_GPIO0] = {GPIO_0, 0, NULL},
+    [YOPEN_PIN_GPIO1] = {GPIO_1, 0, NULL},
+    [YOPEN_PIN_GPIO2] = {GPIO_2, 0, NULL},
+    [YOPEN_PIN_GPIO3] = {GPIO_3, 0, NULL},
+    [YOPEN_PIN_GPIO4] = {GPIO_4, 0, NULL},
+    [YOPEN_PIN_GPIO5] = {GPIO_5, 0, NULL},
+    [YOPEN_PIN_GPIO6] = {GPIO_6, 0, NULL},
+    [YOPEN_PIN_GPIO7] = {GPIO_7, 0, NULL},
+    [YOPEN_PIN_GPIO8] = {GPIO_8, 0, NULL},
+    [YOPEN_PIN_GPIO9] = {GPIO_9, 0, NULL},
+    [YOPEN_PIN_GPIO10] = {GPIO_10, 0, NULL},
+    [YOPEN_PIN_GPIO11] = {GPIO_11, 0, NULL},
+    [YOPEN_PIN_GPIO12] = {GPIO_12, 0, NULL},
+    [YOPEN_PIN_GPIO13] = {GPIO_13, 0, NULL},
+    [YOPEN_PIN_GPIO14] = {GPIO_14, 0, NULL},
+    [YOPEN_PIN_GPIO15] = {GPIO_15, 0, NULL},
+    [YOPEN_PIN_GPIO16] = {GPIO_16, 0, NULL},
+    [YOPEN_PIN_GPIO17] = {GPIO_17, 0, NULL},
+    [YOPEN_PIN_GPIO18] = {GPIO_18, 0, NULL},
+    [YOPEN_PIN_GPIO19] = {GPIO_19, 0, NULL},
+    [YOPEN_PIN_GPIO20] = {GPIO_20, 0, NULL},
+    [YOPEN_PIN_GPIO21] = {GPIO_21, 0, NULL},
+    [YOPEN_PIN_GPIO22] = {GPIO_22, 0, NULL},
+    [YOPEN_PIN_GPIO23] = {GPIO_23, 0, NULL},
+    [YOPEN_PIN_GPIO24] = {GPIO_24, 0, NULL},
+    [YOPEN_PIN_GPIO25] = {GPIO_25, 0, NULL},
+    [YOPEN_PIN_GPIO26] = {GPIO_26, 0, NULL},
+    [YOPEN_PIN_GPIO27] = {GPIO_27, 0, NULL},
+    [YOPEN_PIN_GPIO29] = {GPIO_29, 0, NULL},
+    [YOPEN_PIN_GPIO30] = {GPIO_30, 0, NULL},
+    [YOPEN_PIN_GPIO31] = {GPIO_31, 0, NULL},
+    [YOPEN_PIN_GPIO32] = {GPIO_32, 0, NULL},
+    [YOPEN_PIN_GPIO33] = {GPIO_33, 0, NULL},
+    [YOPEN_PIN_GPIO34] = {GPIO_34, 0, NULL},
+    [YOPEN_PIN_GPIO35] = {GPIO_35, 0, NULL},
+    [YOPEN_PIN_GPIO36] = {GPIO_36, 0, NULL},
+    [YOPEN_PIN_GPIO37] = {GPIO_37, 0, NULL},
+    [YOPEN_PIN_GPIO38] = {GPIO_38, 0, NULL},
 };
 
 
@@ -53,6 +82,10 @@ int32_t qm_gpio_init(qm_gpio_dev_t *gpio)
         return -QM_ENOMEM;
     }
     memset(gpio_config, 0, sizeof(gpio_config_t));
+
+    yopen_gpio_set_voltage(Vol_1_80V);
+
+    yopen_gpio_deinit(gpio_info->pin_id);
 	
     if(init){
         init = 0;
