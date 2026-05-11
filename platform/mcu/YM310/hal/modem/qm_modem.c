@@ -268,11 +268,19 @@ int qm_modem_get_lbs(qm_modem_t modem)
 {
     qm_modem_handle_t *handle = (qm_modem_handle_t*)modem;
     qm_err_t ret;
+    uint8_t nSim = 0;
+    yopen_nw_reg_status_info_s nw_status;
 
-    ret = qm_task_new(&handle->task, "lbs", yopen_lbs_task, handle, 4096, CONFIG_QM_APP_TASK_PRIO);
-    if (ret != QM_EOK) {
-        return ret;
+    yopen_nw_get_reg_status(nSim, &nw_status);
+    if (nw_status.data_reg.state == YOPEN_NW_REG_STATE_HOME_NETWORK || nw_status.data_reg.state == YOPEN_NW_REG_STATE_ROAMING) {
+        ret = qm_task_new(&handle->task, "lbs", yopen_lbs_task, handle, 4096, CONFIG_QM_APP_TASK_PRIO);
+        if (ret != QM_EOK) {
+            return ret;
+        }
+    } else {
+        return -QM_ERROR;
     }
+    
     return QM_EOK;
 }
 
