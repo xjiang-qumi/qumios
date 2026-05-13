@@ -18,11 +18,7 @@ int32_t qm_i2c_init(qm_i2c_dev_t *i2c)
         return -QM_EINVAL;
     }
 
-    if (i2c->config.freq == QM_I2C_BUS_BIT_RATES_400K) {
-        mode = FAST_MODE;
-    } else {
-        mode = STANDARD_MODE;
-    }
+    mode = (I2C_MODE_E)i2c->config.freq;
 
     if (hal_I2cInit(i2c->port, mode) != 0) {
         return -QM_EIO;
@@ -78,15 +74,26 @@ int32_t qm_i2c_master_write_read(qm_i2c_dev_t *i2c, uint16_t dev_addr,
                                 const uint8_t* write_buffer, size_t write_size,
                                 uint8_t* read_buffer, size_t read_size, uint32_t timeout)
 {
-    (void)i2c;
-    (void)dev_addr;
-    (void)write_buffer;
-    (void)write_size;
-    (void)read_buffer;
-    (void)read_size;
     (void)timeout;
 
-    return -QM_ERROR;  // HAL 层不支持原子写-读操作
+    if (i2c == NULL || write_buffer == NULL || read_buffer == NULL || 
+        write_size == 0 || read_size == 0) {
+        return -QM_EINVAL;
+    }
+
+    if (i2c->config.mode != QM_I2C_MODE_MASTER) {
+        return -QM_EINVAL;
+    }
+
+    if (hal_I2cWrite(i2c->port, dev_addr, write_buffer[0], (uint8_t*)&write_buffer[1], write_size - 1) != 0) {
+        return -QM_EIO;
+    }
+
+    if (hal_I2cRead(i2c->port, dev_addr, write_buffer[0], read_buffer, read_size) != 0) {
+        return -QM_EIO;
+    }
+
+    return QM_EOK;
 }
 
 int32_t qm_i2c_slave_write(qm_i2c_dev_t *i2c, const uint8_t *data, uint16_t size, uint32_t timeout)

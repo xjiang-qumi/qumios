@@ -5,7 +5,6 @@
 int32_t qm_spi_init(qm_spi_dev_t *spi)
 {
     SPI_MODE_E mode;
-    SPI_CLK_E clk;
 
     if (spi == NULL) {
         return -QM_EINVAL;
@@ -29,28 +28,7 @@ int32_t qm_spi_init(qm_spi_dev_t *spi)
             break;
     }
 
-    switch (spi->config.freq) {
-        case 812500:
-            clk = SPI_CLK_812_5KHZ;
-            break;
-        case 1625000:
-            clk = SPI_CLK_1_625MHZ;
-            break;
-        case 3250000:
-            clk = SPI_CLK_3_25MHZ;
-            break;
-        case 6500000:
-            clk = SPI_CLK_6_5MHZ;
-            break;
-        case 13000000:
-            clk = SPI_CLK_13MHZ;
-            break;
-        default:
-            clk = SPI_CLK_13MHZ;
-            break;
-    }
-
-    if (hal_SpiInit(spi->port, mode, clk, FALSE) != 0) {
+    if (hal_SpiInit(spi->port, mode, spi->config.freq, FALSE) != 0) {
         return -QM_EIO;
     }
 
